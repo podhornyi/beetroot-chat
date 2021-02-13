@@ -1,0 +1,9 @@
+bind = "0.0.0.0:80"
+backlog = 16
+workers = 2
+threads = 1
+accesslog = "-"
+errorlog = "-"
+loglevel = "info"
+access_log_format = '%(s)s %(h)s %({X-Forwarded-For}i)s %(t)s "%(r)s" %(D)s "%(f)s" "%(a)s"'
+capture_output = True

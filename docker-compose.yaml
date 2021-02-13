@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+  chat:
+    image: chat:local
+    container_name: chat
+    depends_on:
+      - chat_db
+    ports:
+      - 8080:80
+    volumes:
+      - chat_src:/opt/app/api
+    restart: always
+
+  chat_db:
+    image: postgres:12.4-alpine
+    container_name: chat-db
+    environment:
+      POSTGRES_PASSWORD: chat
+      POSTGRES_USER: chat
+      POSTGRES_DB: chat
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - chat_db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+
+volumes:
+  chat_src:
+    driver: local
+    driver_opts:
+      type: none
+      device: "$PWD/api"
+      o: bind
+  chat_db:
+    driver: local
+    driver_opts:
+      type: none
+      device: "$PWD/.tmp/db"
+      o: bind

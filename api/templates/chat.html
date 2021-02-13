@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <form method="post">
+        <p><input type=text name=message>
+        <p><input type=submit value=Send>
+    </form>
+    <div>
+        {% if data %}
+            {% for message in data %}
+                <span>[{{message.create_at}}]: {{message.user_name}} > {{message.text}}</span><br>
+            {% endfor %}
+        {% else %}
+            <H1> No messages found </H1>
+        {% endif %}
+    </div>
+</body>
+</html>
