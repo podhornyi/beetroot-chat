@@ -1,4 +1,6 @@
 from flask import Flask
+import os
+import json
 
 from .db import init_db
 
@@ -13,7 +15,24 @@ class ChatApplication(Flask):
         self.debug = True
         self._register_error_handlers()
 
-        self.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://chat:chat@chat_db/chat'
+        self.config.update(
+            self._get_external_config()
+        )
+
+        # self.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://chat:chat@chat_db/chat'
+        # self.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////opt/app/db/chat.db'
+        
+
+    def _get_external_config(self) -> dict:
+        if not os.environ.get('FLASK_CONFIG'):
+            return dict()
+
+        file_config_path = os.environ['FLASK_CONFIG']
+        if not os.path.exists(file_config_path):
+            return dict()
+
+        with open(file_config_path) as f:
+            return json.loads(f.read())
 
     def _register_error_handlers(self):
 

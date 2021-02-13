@@ -8,7 +8,7 @@ from .db.models import Message
 
 def chat():
     if 'username' not in session:
-        return redirect(url_for('login_bla'))
+        return redirect(url_for('login'))
 
     if request.method == 'POST':
         message = request.form['message']
@@ -48,5 +48,5 @@ def login():
 def logout():
     # remove the username from the session if it's there
     session.pop('username', None)
-    return redirect(url_for('index'))
-
+    print(f'current_app.config={current_app.config}')
+    return redirect(url_for('login'))

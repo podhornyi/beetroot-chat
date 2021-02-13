@@ -1,6 +1,6 @@
 bind = "0.0.0.0:80"
 backlog = 16
-workers = 2
+workers = 4
 threads = 1
 accesslog = "-"
 errorlog = "-"
